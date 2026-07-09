@@ -28,7 +28,7 @@ class Settings {
         UserDefaults.standard.set(foo, forKey: Settings.fooKey)
     }
 
-    func getBar() -> String {
+    func getBar() -> String? {
         return UserDefaults.standard.string(forKey: Settings.barKey)
     }
 
