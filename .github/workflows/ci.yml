@@ -1,0 +1,54 @@
+name: CI
+on: [push, pull_request]
+
+# TODO: cache ~/Library/Developer/Xcode/DerivedData or use actions/cache keyed on Package.resolved once AppCore package grows dependencies
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Install Xcode Utilities
+        run: brew install xcodegen xcbeautify
+      - name: Generate project
+        run: xcodegen generate
+      - name: Build
+        run: |
+          xcodebuild build \
+            -project Forge.xcodeproj \
+            -scheme Forge \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -skipMacroValidation \
+            | xcbeautify
+
+  test:
+    runs-on: macos-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Install Xcode Utilities
+        run: brew install xcodegen xcbeautify
+      - name: Generate project
+        run: xcodegen generate
+      - name: Unit Tests
+        run: |
+          xcodebuild test \
+            -project Forge.xcodeproj \
+            -scheme Forge \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -only-testing:AppTests \
+            | xcbeautify
+      - name: UI Tests
+        run: |
+          xcodebuild test \
+            -project Forge.xcodeproj \
+            -scheme Forge \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -only-testing:AppUITests \
+            | xcbeautify

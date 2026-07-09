@@ -1,0 +1,33 @@
+name: Forge
+options:
+  bundleIdPrefix: com.marcosmodernlife
+targets:
+  Forge:
+    type: application
+    platform: iOS
+    # as of Jul 2026: 85% current, 10% v18, 2% v17
+    # phones: 20% 17, 30% 16, 30% 15, 8% 14, 12% 13
+    deploymentTarget: "17.0"
+    sources: [App]
+    dependencies:
+      - package: ForgeCore
+    info:
+      path: Generated-Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: LaunchBackgroundColor
+          UIImageName: LaunchLogo
+          UIImageRespectsSafeAreaInsets: true
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        DEVELOPMENT_TEAM: YOUR_TEAM_ID
+  ForgeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [ForgeUITests]
+    dependencies:
+      - target: Forge
+packages:
+  ForgeCore:
+    path: Packages/ForgeCore
