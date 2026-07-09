@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // In iOS 13 setup is done in SceneDelegate
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = UINavigationController(rootViewController: ViewController())
+            window?.rootViewController = UINavigationController(rootViewController: RootViewController())
         }
 
         return true
