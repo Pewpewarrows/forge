@@ -25,7 +25,7 @@ targets:
   ForgeUITests:
     type: bundle.ui-testing
     platform: iOS
-    sources: [ForgeUITests]
+    sources: [AppUITests]
     dependencies:
       - target: Forge
 packages:
